@@ -1,0 +1,20 @@
+Fixing Fluid Synth in MODEP
+
+
+https://blokas.io/patchbox-os/docs/troubleshooting/
+
+See logs sudo journalctl --unit modep-mod-host
+
+Error when trying to add fluid synth based plugins like Fluid Pipes
+
+Aug 31 16:38:16 patchbox mod-host[960]: lilv_lib_open(): error: Failed to open library /var/modep/lv2/FluidPipes.lv2/FluidPlug.so (/var/modep/lv2/FluidPipes.lv2/FluidPlug.so: ELF load command address/offset not page-aligned)
+Aug 31 16:38:16 patchbox mod-host[960]: can't get lilv instance
+
+sudo apt install lilv-utils
+
+added kernel=kernel8.img to /boot/firmware/config.txt
+
+what does that do? shrug something like this https://www.raspberrypi.com/documentation/computers/config_txt.html#kernel
+
+then restart
+

@@ -1,5 +1,5 @@
 # MODEP
-- get fluid synths working
+- ~get fluid synths working~ done
 - figure out better touch screen support - cannot drag and drop 
 
 # Aeolus
