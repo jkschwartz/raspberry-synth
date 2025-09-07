@@ -18,3 +18,23 @@ what does that do? shrug something like this https://www.raspberrypi.com/documen
 
 then restart
 
+
+Aeolus notes
+
+sudo apt install aeolus
+
+to make stop modifiable make stops writable
+
+sudo chmod 777 -R /usr/share/aeolus/stops (maybe this should have a few fewer permissions?)
+
+setBfree notes
+
+
+https://x42-plugins.com/x42/setBfree
+download binary arm64, run it
+
+
+
+Dexed notes
+
+https://github.com/asb2m10/dexed?tab=readme-ov-file

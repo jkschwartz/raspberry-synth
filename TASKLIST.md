@@ -14,4 +14,11 @@
 # Keybow 2040
 - design doc for functionality
 
+# setBfree
+- write script to start up and set up midi
+
+# Dexed
+- test build
+- get lots of syx files
+- write script
 

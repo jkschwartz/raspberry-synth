@@ -1,4 +1,4 @@
-aeolus -I Aeolus1 &
+setBfree &
 
 sleep 2 
 
