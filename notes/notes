@@ -27,6 +27,10 @@ to make stop modifiable make stops writable
 
 sudo chmod 777 -R /usr/share/aeolus/stops (maybe this should have a few fewer permissions?)
 
+
+UI issues galore. Testing text mode. To enable a stop use this: s P + prin8
+
+
 setBfree notes
 
 
