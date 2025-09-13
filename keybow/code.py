@@ -9,7 +9,7 @@ keys = keybow.keys
 # Colors
 rgb = (0, 255, 255)
 engine = (0, 150, 150)
-selected_engine = (100,255,255)
+selected_engine = (200,50,255)
 non_selected_engine = (0,40,40)
 preset = (70, 50, 0)
 settings = (0, 0, 255)
@@ -24,6 +24,10 @@ setBfree_key = 11
 pd_key = 15
 
 #current_view = States.HOME
+
+class Engine:
+    def __init__(self):
+        self.draw_view = home_view
 
 def home_view(keys):
     for i in range(16):
