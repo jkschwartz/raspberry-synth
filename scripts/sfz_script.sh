@@ -10,4 +10,3 @@ sleep 2
 
 jack_connect system:midi_capture_2 sfizz:in &> /dev/null
 
-fg

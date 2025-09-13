@@ -33,12 +33,57 @@ UI issues galore. Testing text mode. To enable a stop use this: s P + prin8
 
 setBfree notes
 
-
-https://x42-plugins.com/x42/setBfree
-download binary arm64, run it
-
+sudo apt install setbfree (all lowercase)
 
 
 Dexed notes
 
 https://github.com/asb2m10/dexed?tab=readme-ov-file
+
+Linux sampler (sfz)
+
+https://linuxsampler.org/downloads.html
+
+compile and install 
+
+libgig
+linuxsampler
+gigedit
+liblscp
+qsampler
+
+libgig svn co https://svn.linuxsampler.org/svn/libgig/trunk libgig
+
+sudo apt install libtool
+sudo apt install libsndfile1-dev
+sudo apt install uuid-dev
+
+make -f Makefile.cvs
+./configure
+make
+sudo make install
+
+svn co https://svn.linuxsampler.org/svn/linuxsampler/trunk linuxsampler
+
+
+sudo apt install flex
+sudo apt install bison
+
+install libjack-jackd2-dev from ui package manager (add / remove software)
+
+make -f Makefile.cvs
+./configure
+make
+sudo make install
+
+sfizz
+
+build from source using these directions https://sfztools.github.io/sfizz/development/build/
+default options 
+
+add sfizz to path
+
+
+
+
+
