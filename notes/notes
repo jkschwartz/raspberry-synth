@@ -19,6 +19,11 @@ what does that do? shrug something like this https://www.raspberrypi.com/documen
 then restart
 
 
+Keybow2040 notes
+
+https://learn.adafruit.com/welcome-to-circuitpython/advanced-serial-console-on-linux
+
+
 Aeolus notes
 
 sudo apt install aeolus

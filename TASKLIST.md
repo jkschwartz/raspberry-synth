@@ -13,6 +13,7 @@
 
 # Keybow 2040
 - design doc for functionality
+- state machine?
 
 # setBfree
 - write script to start up and set up midi
@@ -22,3 +23,6 @@
 - get lots of syx files
 - write script
 
+# PD
+- write script for start up
+- get lots of synths other people made

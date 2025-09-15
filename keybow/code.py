@@ -7,73 +7,383 @@ keybow = Keybow2040(i2c)
 keys = keybow.keys
 
 # Colors
-rgb = (0, 255, 255)
-engine = (0, 150, 150)
-selected_engine = (200,50,255)
-non_selected_engine = (0,40,40)
+engine = (0, 160, 170)
+selected_engine = (255,0,255)
+non_selected_engine = (0,20,20)
 preset = (70, 50, 0)
+action_up = (50, 200, 0)
+action_down = (200, 30, 0)
 settings = (0, 0, 255)
+fx_settings = (0,255,0)
+
 non_functional = (5,5,5)
-engine_keys = [3,7,11,15]
-setting_keys = [12]
 
 # Keys
-sfizz_key = 3
-aeolus_key = 7
-setBfree_key = 11
-pd_key = 15
+engine_keys = [0,1,2,3]
+mode_keys = [4,5,6,7,8,9,10,11,12,13]
+sfizz_key = 0
+aeolus_key = 1
+setBfree_key = 2
+pd_key = 3
 
-#current_view = States.HOME
+settings_key = 15
+fx_key = 14
 
-class Engine:
+
+#Settings view specific
+action_up_keys = [4,5,11]
+action_down_keys = [8,9]
+
+#[0 1 2 3]
+#[4 5 6 7]
+#[8 9 10 11]
+#[12 13 14 15]
+#[Eng Eng Eng Eng]
+#[Pre Pre Pre Pre]
+#[Pre Pre Pre Pre]
+#[Pre Pre Pre Set]
+
+
+class Screen(object):
     def __init__(self):
-        self.draw_view = home_view
+        pass
 
-def home_view(keys):
-    for i in range(16):
-        if i in engine_keys:
-            keys[i].set_led(*engine)
-        elif i in setting_keys:
-            keys[i].set_led(*settings)
-        else:
+    @property
+    def name(self):
+        return ''
+
+    def enter(self, machine):
+        pass
+
+    def exit(self, machine):
+        pass
+
+    def update(self, machine):
+        return True
+
+
+#Ok ok maybe this is a state machine
+class ScreenMachine(object):
+    def __init__(self):
+        self.current_screen = None
+        self.screens = {}
+
+    def add_screen(self, screen):
+        self.screens[screen.name] = screen
+
+    def go_to_screen(self, screen_name):
+        if self.current_screen:
+            self.current_screen.exit(self)
+        self.current_screen = self.screens[screen_name]
+        self.current_screen.enter(self)
+
+    def update(self):
+        if self.current_screen:
+            self.current_screen.update(self)
+
+
+class HomeScreen(Screen):
+    @property
+    def name(self):
+        return 'home'
+
+    def enter(self, machine):
+        
+        keys[sfizz_key].set_led(*engine)
+        @keybow.on_release(keys[sfizz_key])
+        def release_handler(key):
+            machine.go_to_screen('sfizz')
+
+        keys[aeolus_key].set_led(*engine)
+        @keybow.on_release(keys[aeolus_key])
+        def release_handler(key):
+            machine.go_to_screen('aeolus')
+
+        keys[setBfree_key].set_led(*engine)
+        @keybow.on_release(keys[setBfree_key])
+        def release_handler(key):
+            machine.go_to_screen('setBfree')
+       
+        keys[pd_key].set_led(*engine)
+        @keybow.on_release(keys[pd_key])
+        def release_handler(key):
+            machine.go_to_screen('pd')
+
+        keys[settings_key].set_led(*settings)
+        @keybow.on_release(keys[settings_key])
+        def release_handler(key):
+            machine.go_to_screen('settings')
+
+        keys[fx_key].set_led(*fx_settings)
+        @keybow.on_release(keys[fx_key])
+        def release_handler(key):
+            machine.go_to_screen('fx')
+
+        for i in mode_keys:
             keys[i].set_led(*non_functional)
+            
+            @keybow.on_release(keys[i])
+            def release_handler(key):
+                pass
+        
+    def exit(self, machine):
+        pass
 
-def aeolus_view(keys):
-    for i in range(16):
-        if i == aeolus_key:
-            keys[i].set_led(*selected_engine)
-        elif i in setting_keys:
-            keys[i].set_led(*settings)
-        elif i in engine_keys:
+    def update(self, machine):
+        return True
+
+class SettingsScreen(Screen):
+
+    @property
+    def name(self):
+        return 'settings'
+
+    def enter(self, machine):
+        #home keys are engine keys
+        for i in engine_keys:
             keys[i].set_led(*non_selected_engine)
-        else:
-            keys[i].set_led(*preset)
+            @keybow.on_release(keys[i])
+            def release_handler(key):
+                machine.go_to_screen('home')
 
+        for i in mode_keys:
+            keys[i].set_led(*non_functional)
+            @keybow.on_release(keys[i])
+            def release_handler(key):
+                pass
+ 
+        keys[settings_key].set_led(*selected_engine)
+        @keybow.on_release(keys[settings_key])
+        def release_handler(key):
+            machine.go_to_screen('settings')
 
-def setBfree_view(keys):
-    for i in range(16):
-        if i == setBfree_key:
-            keys[i].set_led(*selected_engine)
-        elif i in setting_keys:
-            keys[i].set_led(*settings)
-        elif i in engine_keys:
+        keys[fx_key].set_led(*non_selected_engine)
+        @keybow.on_release(keys[fx_key])
+        def release_handler(key):
+            machine.go_to_screen('fx')
+
+    def exit(self, machine):
+        pass
+
+    def update(self, machine):
+        return True
+
+class FxScreen(Screen):
+    @property
+    def name(self):
+        return 'fx'
+
+    def enter(self, machine):
+        #home keys are engine keys
+        for i in engine_keys:
             keys[i].set_led(*non_selected_engine)
-        else:
-            keys[i].set_led(*preset)
+            @keybow.on_release(keys[i])
+            def release_handler(key):
+                machine.go_to_screen('home')
+
+        for i in mode_keys:
+            keys[i].set_led(*non_functional)
+            @keybow.on_release(keys[i])
+            def release_handler(key):
+                pass
+ 
+        keys[settings_key].set_led(*non_selected_engine)
+        @keybow.on_release(keys[settings_key])
+        def release_handler(key):
+            machine.go_to_screen('settings')
+
+        keys[fx_key].set_led(*selected_engine)
+        @keybow.on_release(keys[fx_key])
+        def release_handler(key):
+            machine.go_to_screen('fx')
+
+    def exit(self, machine):
+        pass
+
+    def update(self, machine):
+        return True
+
+class SfizzScreen(Screen):
+    @property
+    def name(self):
+        return 'sfizz'
+
+    def enter(self, machine):
+        #home keys are engine keys
+        for i in engine_keys:
+            keys[i].set_led(*non_selected_engine)
+            @keybow.on_release(keys[i])
+            def release_handler(key):
+                machine.go_to_screen('home')
+        
+        keys[sfizz_key].set_led(*selected_engine)
+        @keybow.on_release(keys[sfizz_key])
+        def release_handler(key):
+            pass
+        
+
+        for i in mode_keys:
+            keys[i].set_led(*non_functional)
+            @keybow.on_release(keys[i])
+            def release_handler(key):
+                pass
+ 
+        keys[settings_key].set_led(*settings)
+        @keybow.on_release(keys[settings_key])
+        def release_handler(key):
+            machine.go_to_screen('settings')
+
+        keys[fx_key].set_led(*fx_settings)
+        @keybow.on_release(keys[fx_key])
+        def release_handler(key):
+            machine.go_to_screen('fx')
+
+    def exit(self, machine):
+        pass
+
+    def update(self, machine):
+        return True
+
+class AeolusScreen(Screen):
+    @property
+    def name(self):
+        return 'aeolus'
+
+    def enter(self, machine):
+        #home keys are engine keys
+        for i in engine_keys:
+            keys[i].set_led(*non_selected_engine)
+            @keybow.on_release(keys[i])
+            def release_handler(key):
+                machine.go_to_screen('home')
+        
+        keys[aeolus_key].set_led(*selected_engine)
+        @keybow.on_release(keys[aeolus_key])
+        def release_handler(key):
+            pass
+        
+
+        for i in mode_keys:
+            keys[i].set_led(*non_functional)
+            @keybow.on_release(keys[i])
+            def release_handler(key):
+                pass
+ 
+        keys[settings_key].set_led(*settings)
+        @keybow.on_release(keys[settings_key])
+        def release_handler(key):
+            machine.go_to_screen('settings')
+
+        keys[fx_key].set_led(*fx_settings)
+        @keybow.on_release(keys[fx_key])
+        def release_handler(key):
+            machine.go_to_screen('fx')
+
+    def exit(self, machine):
+        pass
+
+    def update(self, machine):
+        return True
+
+
+class SetBfreeScreen(Screen):
+    @property
+    def name(self):
+        return 'setBfree'
+
+    def enter(self, machine):
+        #home keys are engine keys
+        for i in engine_keys:
+            keys[i].set_led(*non_selected_engine)
+            @keybow.on_release(keys[i])
+            def release_handler(key):
+                machine.go_to_screen('home')
+        
+        keys[setBfree_key].set_led(*selected_engine)
+        @keybow.on_release(keys[setBfree_key])
+        def release_handler(key):
+            pass
+
+        for i in mode_keys:
+            keys[i].set_led(*non_functional)
+            @keybow.on_release(keys[i])
+            def release_handler(key):
+                pass
+ 
+        keys[settings_key].set_led(*settings)
+        @keybow.on_release(keys[settings_key])
+        def release_handler(key):
+            machine.go_to_screen('settings')
+
+        keys[fx_key].set_led(*fx_settings)
+        @keybow.on_release(keys[fx_key])
+        def release_handler(key):
+            machine.go_to_screen('fx')
+
+    def exit(self, machine):
+        pass
+
+    def update(self, machine):
+        return True
+
+
+class PdScreen(Screen):
+    @property
+    def name(self):
+        return 'pd'
+
+    def enter(self, machine):
+        #home keys are engine keys
+        for i in engine_keys:
+            keys[i].set_led(*non_selected_engine)
+            @keybow.on_release(keys[i])
+            def release_handler(key):
+                machine.go_to_screen('home')
+        
+        keys[pd_key].set_led(*selected_engine)
+        @keybow.on_release(keys[pd_key])
+        def release_handler(key):
+            pass
+
+        for i in mode_keys:
+            keys[i].set_led(*non_functional)
+            @keybow.on_release(keys[i])
+            def release_handler(key):
+                pass
+ 
+        keys[settings_key].set_led(*settings)
+        @keybow.on_release(keys[settings_key])
+        def release_handler(key):
+            machine.go_to_screen('settings')
+
+        keys[fx_key].set_led(*fx_settings)
+        @keybow.on_release(keys[fx_key])
+        def release_handler(key):
+            machine.go_to_screen('fx')
+
+    def exit(self, machine):
+        pass
+
+    def update(self, machine):
+        return True
+
+
+
+machine = ScreenMachine()
+machine.add_screen(HomeScreen())
+machine.add_screen(SettingsScreen())
+machine.add_screen(FxScreen())
+machine.add_screen(SfizzScreen())
+machine.add_screen(AeolusScreen())
+machine.add_screen(SetBfreeScreen())
+machine.add_screen(PdScreen())
 
 #default view
-current_engine = aeolus_view
-current_engine(keys)
+machine.go_to_screen('home')
 while True:
     # Always remember to call keybow.update() on every iteration of your loop!
     keybow.update()
-    current_engine(keys)
+    machine.update()
     for key in keys:
         if key.pressed:
-            if key.get_number() == aeolus_key:
-                current_engine = aeolus_view
-            elif key.get_number() == setBfree_key:
-                current_engine = setBfree_view
-            elif key.get_number() in engine_keys:
-                current_engine = home_view
-            key.set_led(99,99,94)
+           key.set_led(99,20,20)
