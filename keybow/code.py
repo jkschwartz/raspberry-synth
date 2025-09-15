@@ -1,10 +1,22 @@
 import board
 from keybow2040 import Keybow2040
 
+import time
+
+import usb_hid
+from adafruit_hid.keyboard import Keyboard
+from adafruit_hid.keyboard_layout_us import KeyboardLayoutUS
+from adafruit_hid.keycode import Keycode
+
+
 # Set up Keybow
 i2c = board.I2C()
 keybow = Keybow2040(i2c)
 keys = keybow.keys
+
+# Set up keyboard integration
+keyboard = Keyboard(usb_hid.devices)
+layout = KeyboardLayoutUS(keyboard)
 
 # Colors
 engine = (0, 160, 170)
@@ -42,7 +54,6 @@ action_down_keys = [8,9]
 #[Pre Pre Pre Pre]
 #[Pre Pre Pre Pre]
 #[Pre Pre Pre Set]
-
 
 class Screen(object):
     def __init__(self):
@@ -88,7 +99,6 @@ class HomeScreen(Screen):
         return 'home'
 
     def enter(self, machine):
-        
         keys[sfizz_key].set_led(*engine)
         @keybow.on_release(keys[sfizz_key])
         def release_handler(key):
@@ -127,6 +137,7 @@ class HomeScreen(Screen):
                 pass
         
     def exit(self, machine):
+        #shut down running engines
         pass
 
     def update(self, machine):
@@ -250,6 +261,19 @@ class AeolusScreen(Screen):
         return 'aeolus'
 
     def enter(self, machine):
+        #start aeolus
+        
+        #start up a terminal
+        keyboard.send(Keycode.CONTROL, Keycode.SHIFT, Keycode.N)
+
+        time.sleep(1)
+
+        layout.write('~/raspberry-synth/scripts/aeolus_script.sh')
+
+        time.sleep(1)
+
+        keyboard.send(Keycode.ENTER)
+
         #home keys are engine keys
         for i in engine_keys:
             keys[i].set_led(*non_selected_engine)
