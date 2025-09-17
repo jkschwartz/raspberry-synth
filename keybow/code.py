@@ -249,8 +249,13 @@ class SfizzScreen(Screen):
                 keys[i].set_led(*preset)
                 @keybow.on_release(keys[i])
                 def release_handler(key):
-                    layout.write('load_instrument ~/sfz/kawaii_dreams_from_mars/Kawaii\ Dreams\ From\ Mars/SFZ/Kawaii\ Dreams\ From\ Mars/02.\ Keys/Randroid\ -\ Kawaii\ Dreams\ From\ Mars.sfz')
-                
+                    layout.write('load_instrument "sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/02. Keys/Randroid - Kawaii Dreams From Mars.sfz"')
+            elif i == 5:
+                keys[i].set_led(*preset)
+                @keybow.on_release(keys[i])
+                def release_handler(key):
+                    layout.write('load_instrument "sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/04. Organs/Indie Organ - Kawaii Dreams From Mars.sfz"')
+                               
             else: 
                 keys[i].set_led(*non_functional)
                 @keybow.on_release(keys[i])

@@ -1,5 +1,3 @@
-~/raspberry-synth/scripts/connections_script.sh &
+~/raspberry-synth/scripts/aeolus_connections.sh &
 
 aeolus -I Aeolus1
-
-exit 0
