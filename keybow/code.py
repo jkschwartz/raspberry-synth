@@ -22,7 +22,7 @@ layout = KeyboardLayoutUS(keyboard)
 engine = (0, 160, 170)
 selected_engine = (255,0,255)
 non_selected_engine = (0,20,20)
-preset = (70, 50, 0)
+preset = (80, 50, 0)
 action_up = (50, 200, 0)
 action_down = (200, 30, 0)
 settings = (0, 0, 255)
@@ -220,7 +220,18 @@ class SfizzScreen(Screen):
         return 'sfizz'
 
     def enter(self, machine):
+        
+        #start up a terminal
+        keyboard.send(Keycode.CONTROL, Keycode.ALT, Keycode.T)
+
+        time.sleep(1)
+        layout.write('~/raspberry-synth/scripts/sfz_script.sh')
+        time.sleep(1)
+        keyboard.send(Keycode.ENTER)
+
         #home keys are engine keys
+        
+
         for i in engine_keys:
             keys[i].set_led(*non_selected_engine)
             @keybow.on_release(keys[i])
@@ -234,10 +245,17 @@ class SfizzScreen(Screen):
         
 
         for i in mode_keys:
-            keys[i].set_led(*non_functional)
-            @keybow.on_release(keys[i])
-            def release_handler(key):
-                pass
+            if i == 4:
+                keys[i].set_led(*preset)
+                @keybow.on_release(keys[i])
+                def release_handler(key):
+                    layout.write('load_instrument ~/sfz/kawaii_dreams_from_mars/Kawaii\ Dreams\ From\ Mars/SFZ/Kawaii\ Dreams\ From\ Mars/02.\ Keys/Randroid\ -\ Kawaii\ Dreams\ From\ Mars.sfz')
+                
+            else: 
+                keys[i].set_led(*non_functional)
+                @keybow.on_release(keys[i])
+                def release_handler(key):
+                    pass
  
         keys[settings_key].set_led(*settings)
         @keybow.on_release(keys[settings_key])
@@ -264,14 +282,11 @@ class AeolusScreen(Screen):
         #start aeolus
         
         #start up a terminal
-        keyboard.send(Keycode.CONTROL, Keycode.SHIFT, Keycode.N)
+        keyboard.send(Keycode.CONTROL, Keycode.ALT, Keycode.T)
 
         time.sleep(1)
-
         layout.write('~/raspberry-synth/scripts/aeolus_script.sh')
-
         time.sleep(1)
-
         keyboard.send(Keycode.ENTER)
 
         #home keys are engine keys
@@ -316,6 +331,14 @@ class SetBfreeScreen(Screen):
         return 'setBfree'
 
     def enter(self, machine):
+        #start up a terminal
+        keyboard.send(Keycode.CONTROL, Keycode.ALT, Keycode.T)
+
+        time.sleep(1)
+        layout.write('~/raspberry-synth/scripts/setBfree_script.sh')
+        time.sleep(1)
+        keyboard.send(Keycode.ENTER)
+        
         #home keys are engine keys
         for i in engine_keys:
             keys[i].set_led(*non_selected_engine)
@@ -410,4 +433,4 @@ while True:
     machine.update()
     for key in keys:
         if key.pressed:
-           key.set_led(99,20,20)
+            key.set_led(99,20,20)

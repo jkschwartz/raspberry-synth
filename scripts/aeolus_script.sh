@@ -1,11 +1,5 @@
-aeolus -I Aeolus1 &
+~/raspberry-synth/scripts/connections_script.sh &
 
-sleep 2 
+aeolus -I Aeolus1
 
-jack_connect aeolus:out.L system:playback_1 &> /dev/null
-
-jack_connect aeolus:out.R system:playback_2 &> /dev/null
-
-
-jack_connect system:midi_capture_1 aeolus:Midi/in &> /dev/null
-
+exit 0
