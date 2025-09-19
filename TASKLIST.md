@@ -1,19 +1,22 @@
 # MODEP
 - ~get fluid synths working~ done
 - figure out better touch screen support - cannot drag and drop 
+- Enable as end of chain fx
 
 # Aeolus
 - get script working
 
 # SFZ Player
 - install linux sampler
+- sfizz configuration / preset lists
 
 # Modular / something
 - vcv rack? other analog synth model?
 
 # Keybow 2040
 - design doc for functionality
-- state machine?
+- ~State machine?~
+- close program functions
 
 # setBfree
 - write script to start up and set up midi

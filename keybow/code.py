@@ -46,6 +46,33 @@ fx_key = 14
 action_up_keys = [4,5,11]
 action_down_keys = [8,9]
 
+
+#SFZ presets
+sfz_presets = {
+    "Kawaii": [],
+    "360": [],
+    "Mirage": [],
+    "Soviet": [],
+    "Tape": [],
+    "OB": []
+}
+
+key_4_preset = "sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/02. Keys/Randroid - Kawaii Dreams From Mars.sfz"
+
+key_5_preset = "sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/04. Organs/Indie Organ - Kawaii Dreams From Mars.sfz"
+
+key_6_preset = "sfz/soviet_synths_from_mars/Soviet Synths From Mars/SFZ/Soviet Synths From Mars/05. Strings/String Combo 1 - TOM 1501.sfz"
+
+key_7_preset = "sfz/soviet_synths_from_mars/Soviet Synths From Mars/SFZ/Soviet Synths From Mars/04. Keys and Chords/Clarinet - MAESTRO.sfz" 
+
+key_8_preset = "sfz/soviet_synths_from_mars/Soviet Synths From Mars/SFZ/Soviet Synths From Mars/03. Pads/Piano 201 - MAESTRO.sfz"
+
+key_9_preset = "sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/05. Bass/E Bass Multi Filter - 360 From Mars.sfz" 
+
+key_10_preset = "sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/02. Strings/Strings - 360 From Mars.sfz" 
+
+key_11_preset = "sfz/mirage_from_mars/Mirage From Mars/Presets/SFZ/Mirage From Mars/01. Keys/Artifact Piano - Mirage From Mars.sfz" 
+
 #[0 1 2 3]
 #[4 5 6 7]
 #[8 9 10 11]
@@ -249,13 +276,42 @@ class SfizzScreen(Screen):
                 keys[i].set_led(*preset)
                 @keybow.on_release(keys[i])
                 def release_handler(key):
-                    layout.write('load_instrument "sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/02. Keys/Randroid - Kawaii Dreams From Mars.sfz"')
+                    load_sfz_from_sfizz(key_4_preset)
             elif i == 5:
                 keys[i].set_led(*preset)
                 @keybow.on_release(keys[i])
                 def release_handler(key):
-                    layout.write('load_instrument "sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/04. Organs/Indie Organ - Kawaii Dreams From Mars.sfz"')
-                               
+                    load_sfz_from_sfizz(key_5_preset)
+            elif i == 6:
+                keys[i].set_led(*preset)
+                @keybow.on_release(keys[i])
+                def release_handler(key):
+                    load_sfz_from_sfizz(key_6_preset)
+            elif i == 7:
+                keys[i].set_led(*preset)
+                @keybow.on_release(keys[i])
+                def release_handler(key):
+                    load_sfz_from_sfizz(key_7_preset)
+            elif i == 8:
+                keys[i].set_led(*preset)
+                @keybow.on_release(keys[i])
+                def release_handler(key):
+                    load_sfz_from_sfizz(key_8_preset)
+            elif i == 9:
+                keys[i].set_led(*preset)
+                @keybow.on_release(keys[i])
+                def release_handler(key):
+                    load_sfz_from_sfizz(key_9_preset)
+            elif i == 10:
+                keys[i].set_led(*preset)
+                @keybow.on_release(keys[i])
+                def release_handler(key):
+                    load_sfz_from_sfizz(key_10_preset)
+            elif i == 11:
+                keys[i].set_led(*preset)
+                @keybow.on_release(keys[i])
+                def release_handler(key):
+                    load_sfz_from_sfizz(key_11_preset)
             else: 
                 keys[i].set_led(*non_functional)
                 @keybow.on_release(keys[i])
@@ -419,7 +475,11 @@ class PdScreen(Screen):
     def update(self, machine):
         return True
 
-
+#Helper functions
+def load_sfz_from_sfizz(path):
+    layout.write('load_instrument "' + path + '"')
+    time.sleep(.5)
+    keyboard.send(Keycode.ENTER)
 
 machine = ScreenMachine()
 machine.add_screen(HomeScreen())
@@ -438,4 +498,5 @@ while True:
     machine.update()
     for key in keys:
         if key.pressed:
+            #get current value and flash then return to current value
             key.set_led(99,20,20)
