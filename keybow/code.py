@@ -23,6 +23,7 @@ engine = (0, 160, 170)
 selected_engine = (255,0,255)
 non_selected_engine = (0,20,20)
 preset = (80, 50, 0)
+selected_preset = (180,50,0)
 action_up = (50, 200, 0)
 action_down = (200, 30, 0)
 settings = (0, 0, 255)
@@ -47,31 +48,40 @@ action_up_keys = [4,5,11]
 action_down_keys = [8,9]
 
 
+sfz_packs = {4: "kawaii", 5: "s360", 6: "mirage", 7: "soviet", 8: "tape", 9: "ob", 10: "drSample"}
+#keys to be set to non functional for sfizz screen
+unused_packs = [11,12,13]
+
 #SFZ presets
 sfz_presets = {
-    "Kawaii": [],
-    "360": [],
-    "Mirage": [],
-    "Soviet": [],
-    "Tape": [],
-    "OB": []
+    "kawaii": [
+        "sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/02. Keys/Randroid - Kawaii Dreams From Mars.sfz",
+        "sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/04. Organs/Indie Organ - Kawaii Dreams From Mars.sfz"
+
+        ],
+    "s360": [
+        "sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/05. Bass/E Bass Multi Filter - 360 From Mars.sfz",
+        "sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/02. Strings/Strings - 360 From Mars.sfz"
+        ],
+    "mirage": [
+        "sfz/mirage_from_mars/Mirage From Mars/Presets/SFZ/Mirage From Mars/01. Keys/Artifact Piano - Mirage From Mars.sfz",
+        "sfz/mirage_from_mars/Mirage From Mars/Presets/SFZ/Mirage From Mars/02. Orchestral/String Quartet - Mirage From Mars.sfz"
+        ],
+    "soviet": [
+        "sfz/soviet_synths_from_mars/Soviet Synths From Mars/SFZ/Soviet Synths From Mars/05. Strings/String Combo 1 - TOM 1501.sfz",
+        "sfz/soviet_synths_from_mars/Soviet Synths From Mars/SFZ/Soviet Synths From Mars/04. Keys and Chords/Clarinet - MAESTRO.sfz",
+        "sfz/soviet_synths_from_mars/Soviet Synths From Mars/SFZ/Soviet Synths From Mars/03. Pads/Piano 201 - MAESTRO.sfz"
+        
+
+        ],
+    "tape": [
+        ],
+    "ob": [
+        ],
+    "drSample": [
+        "sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/03. Keys/02. Upright Piano - Dr Sample From Mars.sfz"
+        ]
 }
-
-key_4_preset = "sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/02. Keys/Randroid - Kawaii Dreams From Mars.sfz"
-
-key_5_preset = "sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/04. Organs/Indie Organ - Kawaii Dreams From Mars.sfz"
-
-key_6_preset = "sfz/soviet_synths_from_mars/Soviet Synths From Mars/SFZ/Soviet Synths From Mars/05. Strings/String Combo 1 - TOM 1501.sfz"
-
-key_7_preset = "sfz/soviet_synths_from_mars/Soviet Synths From Mars/SFZ/Soviet Synths From Mars/04. Keys and Chords/Clarinet - MAESTRO.sfz" 
-
-key_8_preset = "sfz/soviet_synths_from_mars/Soviet Synths From Mars/SFZ/Soviet Synths From Mars/03. Pads/Piano 201 - MAESTRO.sfz"
-
-key_9_preset = "sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/05. Bass/E Bass Multi Filter - 360 From Mars.sfz" 
-
-key_10_preset = "sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/02. Strings/Strings - 360 From Mars.sfz" 
-
-key_11_preset = "sfz/mirage_from_mars/Mirage From Mars/Presets/SFZ/Mirage From Mars/01. Keys/Artifact Piano - Mirage From Mars.sfz" 
 
 #[0 1 2 3]
 #[4 5 6 7]
@@ -253,12 +263,10 @@ class SfizzScreen(Screen):
 
         time.sleep(1)
         layout.write('~/raspberry-synth/scripts/sfz_script.sh')
-        time.sleep(1)
+        time.sleep(.5)
         keyboard.send(Keycode.ENTER)
 
         #home keys are engine keys
-        
-
         for i in engine_keys:
             keys[i].set_led(*non_selected_engine)
             @keybow.on_release(keys[i])
@@ -270,53 +278,21 @@ class SfizzScreen(Screen):
         def release_handler(key):
             pass
         
+        
+        for pack_id, value in sfz_packs.items():
+            print("key value iteration")
+            print(pack_id)
+            print(value)
+            keys[pack_id].set_led(*preset)
+            pack_engine = value
+            print(pack_engine)
+            engine_nav_helper(pack_id,value)
 
-        for i in mode_keys:
-            if i == 4:
-                keys[i].set_led(*preset)
-                @keybow.on_release(keys[i])
-                def release_handler(key):
-                    load_sfz_from_sfizz(key_4_preset)
-            elif i == 5:
-                keys[i].set_led(*preset)
-                @keybow.on_release(keys[i])
-                def release_handler(key):
-                    load_sfz_from_sfizz(key_5_preset)
-            elif i == 6:
-                keys[i].set_led(*preset)
-                @keybow.on_release(keys[i])
-                def release_handler(key):
-                    load_sfz_from_sfizz(key_6_preset)
-            elif i == 7:
-                keys[i].set_led(*preset)
-                @keybow.on_release(keys[i])
-                def release_handler(key):
-                    load_sfz_from_sfizz(key_7_preset)
-            elif i == 8:
-                keys[i].set_led(*preset)
-                @keybow.on_release(keys[i])
-                def release_handler(key):
-                    load_sfz_from_sfizz(key_8_preset)
-            elif i == 9:
-                keys[i].set_led(*preset)
-                @keybow.on_release(keys[i])
-                def release_handler(key):
-                    load_sfz_from_sfizz(key_9_preset)
-            elif i == 10:
-                keys[i].set_led(*preset)
-                @keybow.on_release(keys[i])
-                def release_handler(key):
-                    load_sfz_from_sfizz(key_10_preset)
-            elif i == 11:
-                keys[i].set_led(*preset)
-                @keybow.on_release(keys[i])
-                def release_handler(key):
-                    load_sfz_from_sfizz(key_11_preset)
-            else: 
-                keys[i].set_led(*non_functional)
-                @keybow.on_release(keys[i])
-                def release_handler(key):
-                    pass
+        for i in unused_packs:
+            keys[i].set_led(*non_functional)
+            @keybow.on_release(keys[i])
+            def release_handler(key):
+                pass
  
         keys[settings_key].set_led(*settings)
         @keybow.on_release(keys[settings_key])
@@ -333,6 +309,172 @@ class SfizzScreen(Screen):
 
     def update(self, machine):
         return True
+
+#https://medium.com/skiller-whale/late-binding-variables-its-a-trap-c17af980164f
+def engine_nav_helper(key_id,new_screen):
+    @keybow.on_release(keys[key_id])
+    def release_handler(key):
+        machine.go_to_screen(new_screen)
+
+def sfizz_load_helper(key_id,preset_path):
+    @keybow.on_release(keys[key_id])
+    def release_handler(key):
+        load_sfz_from_sfizz(preset_path)
+
+class SfizzTypeScreen(Screen):
+    selected_preset = -1
+
+    @property 
+    def name(self):
+        pass
+
+    def enter(self, machine):
+
+        print(self.name)
+        for i in engine_keys:
+            keys[i].set_led(*non_selected_engine)
+            @keybow.on_release(keys[i])
+            def release_handler(key):
+                machine.go_to_screen('home')
+        
+        keys[sfizz_key].set_led(*selected_engine)
+        @keybow.on_release(keys[sfizz_key])
+        def release_handler(key):
+            machine.go_to_screen('sfizz')
+
+        for i in mode_keys:
+            
+            if i-4 < len(sfz_presets[self.name]):
+                print(i-4)
+                preset_name = sfz_presets[self.name][i-4]
+                print(preset_name)
+                keys[i].set_led(*preset)
+                sfizz_load_helper(i,preset_name)
+            else: 
+                keys[i].set_led(*non_functional)
+                @keybow.on_release(keys[i])
+                def release_handler(key):
+                    pass
+ 
+        keys[settings_key].set_led(*settings)
+        @keybow.on_release(keys[settings_key])
+        def release_handler(key):
+            machine.go_to_screen('settings')
+
+        keys[fx_key].set_led(*fx_settings)
+        @keybow.on_release(keys[fx_key])
+        def release_handler(key):
+            machine.go_to_screen('fx')
+
+
+    def exit(self, machine):
+        pass
+
+    def update(self, machine):
+       keys[selected_preset].set_led(*selected_preset)
+
+class KawaiiScreen(SfizzTypeScreen):
+    @property
+    def name(self):
+        return 'kawaii'
+
+    def enter(self, machine):
+        SfizzTypeScreen.enter(self, machine)
+    
+    def exit(self, machine):
+        pass
+
+    def update(self,machine):
+        pass
+
+
+class S360Screen(SfizzTypeScreen):
+    @property
+    def name(self):
+        return 's360'
+
+    def enter(self, machine):
+        SfizzTypeScreen.enter(self, machine)
+    
+    def exit(self, machine):
+        pass
+
+    def update(self,machine):
+        pass
+
+class MirageScreen(SfizzTypeScreen):
+    @property
+    def name(self):
+        return 'mirage'
+
+    def enter(self, machine):
+        SfizzTypeScreen.enter(self, machine)
+    
+    def exit(self, machine):
+        pass
+
+    def update(self,machine):
+        pass
+
+
+class SovietScreen(SfizzTypeScreen):
+    @property
+    def name(self):
+        return 'soviet'
+
+    def enter(self, machine):
+        SfizzTypeScreen.enter(self, machine)
+    
+    def exit(self, machine):
+        pass
+
+    def update(self,machine):
+        pass
+
+class TapeScreen(SfizzTypeScreen):
+    @property
+    def name(self):
+        return 'tape'
+
+    def enter(self, machine):
+        SfizzTypeScreen.enter(self, machine)
+    
+    def exit(self, machine):
+        pass
+
+    def update(self,machine):
+        pass
+
+class ObScreen(SfizzTypeScreen):
+    @property
+    def name(self):
+        return 'ob'
+
+    def enter(self, machine):
+        SfizzTypeScreen.enter(self, machine)
+    
+    def exit(self, machine):
+        pass
+
+    def update(self,machine):
+        pass
+
+
+class DrSampleScreen(SfizzTypeScreen):
+    @property
+    def name(self):
+        return 'drSample'
+
+    def enter(self, machine):
+        SfizzTypeScreen.enter(self, machine)
+    
+    def exit(self, machine):
+        pass
+
+    def update(self,machine):
+        pass
+
+
 
 class AeolusScreen(Screen):
     @property
@@ -489,6 +631,13 @@ machine.add_screen(SfizzScreen())
 machine.add_screen(AeolusScreen())
 machine.add_screen(SetBfreeScreen())
 machine.add_screen(PdScreen())
+machine.add_screen(KawaiiScreen())
+machine.add_screen(S360Screen())
+machine.add_screen(MirageScreen())
+machine.add_screen(SovietScreen())
+machine.add_screen(TapeScreen())
+machine.add_screen(ObScreen())
+machine.add_screen(DrSampleScreen())
 
 #default view
 machine.go_to_screen('home')
@@ -499,4 +648,7 @@ while True:
     for key in keys:
         if key.pressed:
             #get current value and flash then return to current value
+            current_rgb = key.rgb
             key.set_led(99,20,20)
+            time.sleep(.5)
+            key.set_led(current_rgb[0],current_rgb[1],current_rgb[2])
