@@ -56,7 +56,8 @@ unused_packs = [11,12,13]
 sfz_presets = {
     "kawaii": [
         "sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/02. Keys/Randroid - Kawaii Dreams From Mars.sfz",
-        "sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/04. Organs/Indie Organ - Kawaii Dreams From Mars.sfz"
+        "sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/04. Organs/Indie Organ - Kawaii Dreams From Mars.sfz",
+        "sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/03. Pads/Analog Strings - Kawaii Dreams From Mars.sfz"
 
         ],
     "s360": [
@@ -75,11 +76,19 @@ sfz_presets = {
 
         ],
     "tape": [
+        "sfz/tape_fragments_from_mars/Tape Fragments From Mars/Presets/SFZ/Tape Fragments From Mars/02. Leads/Glass Theremin - Tape Fragments From Mars.sfz",
+        "sfz/tape_fragments_from_mars/Tape Fragments From Mars/Presets/SFZ/Tape Fragments From Mars/02. Leads/Tape Flute - Tape Fragments From Mars.sfz"
         ],
     "ob": [
+        "sfz/ob_from_mars/OB From Mars/SFZ/OB From Mars/Organs/King Jimmy - OB From Mars.sfz",
+        "sfz/ob_from_mars/OB From Mars/SFZ/OB From Mars/Strings/Halen Strings - OB From Mars.sfz",
+        "sfz/ob_from_mars/OB From Mars/SFZ/OB From Mars/Keys/AM Funk - OB From Mars.sfz"
         ],
     "drSample": [
-        "sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/03. Keys/02. Upright Piano - Dr Sample From Mars.sfz"
+        "sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/03. Keys/02. Upright Piano - Dr Sample From Mars.sfz",
+        "sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/04. Pads/04. Mellovox - Dr Sample From Mars.sfz",
+        "sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/04. Pads/02. Prophet Chorus - Dr Sample From Mars.sfz",
+        "sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/02. Bass/06. Warm Bass - Dr Sample From Mars.sfz"
         ]
 }
 
@@ -114,6 +123,7 @@ class Screen(object):
 class ScreenMachine(object):
     def __init__(self):
         self.current_screen = None
+        self.running_engine = None
         self.screens = {}
 
     def add_screen(self, screen):
@@ -257,14 +267,15 @@ class SfizzScreen(Screen):
         return 'sfizz'
 
     def enter(self, machine):
-        
-        #start up a terminal
-        keyboard.send(Keycode.CONTROL, Keycode.ALT, Keycode.T)
-
-        time.sleep(1)
-        layout.write('~/raspberry-synth/scripts/sfz_script.sh')
-        time.sleep(.5)
-        keyboard.send(Keycode.ENTER)
+        #check if already running sfizz
+        if machine.running_engine != self.name:
+            machine.running_engine = self.name
+            #start up a terminal
+            keyboard.send(Keycode.CONTROL, Keycode.ALT, Keycode.T)
+            time.sleep(1)
+            layout.write('~/raspberry-synth/scripts/sfz_script.sh')
+            time.sleep(.5)
+            keyboard.send(Keycode.ENTER)
 
         #home keys are engine keys
         for i in engine_keys:
@@ -483,14 +494,15 @@ class AeolusScreen(Screen):
 
     def enter(self, machine):
         #start aeolus
-        
-        #start up a terminal
-        keyboard.send(Keycode.CONTROL, Keycode.ALT, Keycode.T)
+        if machine.running_engine != self.name:
+            machine.running_engine = self.name
+            #start up a terminal
+            keyboard.send(Keycode.CONTROL, Keycode.ALT, Keycode.T)
 
-        time.sleep(1)
-        layout.write('~/raspberry-synth/scripts/aeolus_script.sh')
-        time.sleep(1)
-        keyboard.send(Keycode.ENTER)
+            time.sleep(1)
+            layout.write('~/raspberry-synth/scripts/aeolus_script.sh')
+            time.sleep(.5)
+            keyboard.send(Keycode.ENTER)
 
         #home keys are engine keys
         for i in engine_keys:
@@ -534,13 +546,14 @@ class SetBfreeScreen(Screen):
         return 'setBfree'
 
     def enter(self, machine):
-        #start up a terminal
-        keyboard.send(Keycode.CONTROL, Keycode.ALT, Keycode.T)
-
-        time.sleep(1)
-        layout.write('~/raspberry-synth/scripts/setBfree_script.sh')
-        time.sleep(1)
-        keyboard.send(Keycode.ENTER)
+        if machine.running_engine != self.name:
+            machine.running_engine = self.name
+            #start up a terminal
+            keyboard.send(Keycode.CONTROL, Keycode.ALT, Keycode.T)
+            time.sleep(1)
+            layout.write('~/raspberry-synth/scripts/setBfree_script.sh')
+            time.sleep(.5)
+            keyboard.send(Keycode.ENTER)
         
         #home keys are engine keys
         for i in engine_keys:
