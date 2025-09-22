@@ -23,6 +23,14 @@ engine = (0, 160, 170)
 selected_engine = (255,0,255)
 non_selected_engine = (0,20,20)
 preset = (80, 50, 0)
+pack_synth = (150,0,10)
+pack_sample = (150,110,0)
+preset_bass = (100,0,10)
+preset_keys = (110,10,0)
+preset_orch = (0, 100, 0)
+preset_synth = (90,90,0)
+preset_fx = (20,0,100)
+
 selected_preset = (180,50,0)
 action_up = (50, 200, 0)
 action_down = (200, 30, 0)
@@ -48,47 +56,68 @@ action_up_keys = [4,5,11]
 action_down_keys = [8,9]
 
 
-sfz_packs = {4: "kawaii", 5: "s360", 6: "mirage", 7: "soviet", 8: "tape", 9: "ob", 10: "drSample"}
+sfz_packs = {4: ("kawaii","synth"), 5: ("s360","sample"), 6: ("mirage","sample"), 7: ("soviet","synth"), 8: ("tape","sample"), 9: ("ob","synth"), 10: ("drSample","sample")}
 #keys to be set to non functional for sfizz screen
 unused_packs = [11,12,13]
 
 #SFZ presets
 sfz_presets = {
     "kawaii": [
-        "sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/02. Keys/Randroid - Kawaii Dreams From Mars.sfz",
-        "sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/04. Organs/Indie Organ - Kawaii Dreams From Mars.sfz",
-        "sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/03. Pads/Analog Strings - Kawaii Dreams From Mars.sfz"
+        ("sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/02. Keys/Randroid - Kawaii Dreams From Mars.sfz","keys"),
+        ("sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/04. Organs/Indie Organ - Kawaii Dreams From Mars.sfz","keys"),
+        ("sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/03. Pads/Analog Strings - Kawaii Dreams From Mars.sfz","orch")
 
         ],
     "s360": [
-        "sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/05. Bass/E Bass Multi Filter - 360 From Mars.sfz",
-        "sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/02. Strings/Strings - 360 From Mars.sfz"
+        ("sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/05. Bass/E Bass Multi Filter - 360 From Mars.sfz","bass"),
+        ("sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/02. Strings/Strings - 360 From Mars.sfz","orch"),
+        ("sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/02. Strings/Strings Filter - 360 From Mars.sfz","orch"),
+        ("sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/04. Brass & Woodwind/French Horn Filter - 360 From Mars.sfz","orch"),
+        ("sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/06. Perc/Vibes - 360 From Mars.sfz","orch"),
+        ("sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/04. Brass & Woodwind/English Horn - 360 From Mars.sfz","orch"),
+        ("sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/03. Keys/E Piano Tremolo - 360 From Mars.sfz","keys")
         ],
     "mirage": [
-        "sfz/mirage_from_mars/Mirage From Mars/Presets/SFZ/Mirage From Mars/01. Keys/Artifact Piano - Mirage From Mars.sfz",
-        "sfz/mirage_from_mars/Mirage From Mars/Presets/SFZ/Mirage From Mars/02. Orchestral/String Quartet - Mirage From Mars.sfz"
+        ("sfz/mirage_from_mars/Mirage From Mars/Presets/SFZ/Mirage From Mars/01. Keys/Artifact Piano - Mirage From Mars.sfz","keys"),
+        ("sfz/mirage_from_mars/Mirage From Mars/Presets/SFZ/Mirage From Mars/02. Orchestral/String Quartet - Mirage From Mars.sfz","orch"),
+        ("sfz/mirage_from_mars/Mirage From Mars/Presets/SFZ/Mirage From Mars/06. Vox/Dark Vox - Mirage From Mars.sfz","orch"),
+        ("sfz/mirage_from_mars/Mirage From Mars/Presets/SFZ/Mirage From Mars/05. Synth/Electric Strings - Mirage From Mars.sfz","synth"),
+        ("sfz/mirage_from_mars/Mirage From Mars/Presets/SFZ/Mirage From Mars/01. Keys/Wurli - Mirage From Mars.sfz","keys"),
+        ("sfz/mirage_from_mars/Mirage From Mars/Presets/SFZ/Mirage From Mars/03. Bass/Fuzz Bass - Mirage From Mars.sfz","bass"),
+        ("sfz/mirage_from_mars/Mirage From Mars/Presets/SFZ/Mirage From Mars/03. Bass/Upright Bass - Mirage From Mars.sfz","bass"),
+        ("sfz/mirage_from_mars/Mirage From Mars/Presets/SFZ/Mirage From Mars/01. Keys/Dark Piano - Mirage From Mars.sfz","keys")
+
         ],
     "soviet": [
-        "sfz/soviet_synths_from_mars/Soviet Synths From Mars/SFZ/Soviet Synths From Mars/05. Strings/String Combo 1 - TOM 1501.sfz",
-        "sfz/soviet_synths_from_mars/Soviet Synths From Mars/SFZ/Soviet Synths From Mars/04. Keys and Chords/Clarinet - MAESTRO.sfz",
-        "sfz/soviet_synths_from_mars/Soviet Synths From Mars/SFZ/Soviet Synths From Mars/03. Pads/Piano 201 - MAESTRO.sfz"
+        ("sfz/soviet_synths_from_mars/Soviet Synths From Mars/SFZ/Soviet Synths From Mars/05. Strings/String Combo 1 - TOM 1501.sfz","orch"),
+        ("sfz/soviet_synths_from_mars/Soviet Synths From Mars/SFZ/Soviet Synths From Mars/04. Keys and Chords/Clarinet - MAESTRO.sfz","orch"),
+        ("sfz/soviet_synths_from_mars/Soviet Synths From Mars/SFZ/Soviet Synths From Mars/03. Pads/Piano 201 - MAESTRO.sfz","keys"),
+        ("sfz/soviet_synths_from_mars/Soviet Synths From Mars/SFZ/Soviet Synths From Mars/02. Leads/Broken Brass - ALTAIR 231.sfz","synth"),
+        ("sfz/soviet_synths_from_mars/Soviet Synths From Mars/SFZ/Soviet Synths From Mars/06. Basic Waveforms/Sawtooth - FORMANTA POLIVOKS.sfz","synth"),
+        ("sfz/soviet_synths_from_mars/Soviet Synths From Mars/SFZ/Soviet Synths From Mars/03. Pads/Drunkpad - AELITA.sfz","synth")
         
 
         ],
     "tape": [
-        "sfz/tape_fragments_from_mars/Tape Fragments From Mars/Presets/SFZ/Tape Fragments From Mars/02. Leads/Glass Theremin - Tape Fragments From Mars.sfz",
-        "sfz/tape_fragments_from_mars/Tape Fragments From Mars/Presets/SFZ/Tape Fragments From Mars/02. Leads/Tape Flute - Tape Fragments From Mars.sfz"
+        ("sfz/tape_fragments_from_mars/Tape Fragments From Mars/Presets/SFZ/Tape Fragments From Mars/02. Leads/Glass Theremin - Tape Fragments From Mars.sfz","fx"),
+        ("sfz/tape_fragments_from_mars/Tape Fragments From Mars/Presets/SFZ/Tape Fragments From Mars/02. Leads/Tape Flute - Tape Fragments From Mars.sfz","orch"),
+        ("sfz/tape_fragments_from_mars/Tape Fragments From Mars/Presets/SFZ/Tape Fragments From Mars/05. FX/Awaiting Raptor - Tape Fragments From Mars.sfz","fx"),
+        ("sfz/tape_fragments_from_mars/Tape Fragments From Mars/Presets/SFZ/Tape Fragments From Mars/04. Bass/Otari Bass - Tape Fragments From Mars.sfz","bass")
         ],
     "ob": [
-        "sfz/ob_from_mars/OB From Mars/SFZ/OB From Mars/Organs/King Jimmy - OB From Mars.sfz",
-        "sfz/ob_from_mars/OB From Mars/SFZ/OB From Mars/Strings/Halen Strings - OB From Mars.sfz",
-        "sfz/ob_from_mars/OB From Mars/SFZ/OB From Mars/Keys/AM Funk - OB From Mars.sfz"
+        ("sfz/ob_from_mars/OB From Mars/SFZ/OB From Mars/Organs/King Jimmy - OB From Mars.sfz","keys"),
+        ("sfz/ob_from_mars/OB From Mars/SFZ/OB From Mars/Strings/Halen Strings - OB From Mars.sfz","orch"),
+        ("sfz/ob_from_mars/OB From Mars/SFZ/OB From Mars/Keys/AM Funk - OB From Mars.sfz","keys"),
+        ("sfz/ob_from_mars/OB From Mars/SFZ/OB From Mars/Bass/Medium Muff - OB From Mars.sfz","bass"),
+        ("sfz/ob_from_mars/OB From Mars/SFZ/OB From Mars/Brass & Woodwinds/Hard Trumpet - OB From Mars.sfz", "orch")
         ],
     "drSample": [
-        "sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/03. Keys/02. Upright Piano - Dr Sample From Mars.sfz",
-        "sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/04. Pads/04. Mellovox - Dr Sample From Mars.sfz",
-        "sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/04. Pads/02. Prophet Chorus - Dr Sample From Mars.sfz",
-        "sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/02. Bass/06. Warm Bass - Dr Sample From Mars.sfz"
+        ("sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/03. Keys/02. Upright Piano - Dr Sample From Mars.sfz","keys"),
+        ("sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/04. Pads/04. Mellovox - Dr Sample From Mars.sfz","orch"),
+        ("sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/04. Pads/02. Prophet Chorus - Dr Sample From Mars.sfz","synth"),
+        ("sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/02. Bass/06. Warm Bass - Dr Sample From Mars.sfz","bass"),
+        ("sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/02. Bass/02. E Bass - Dr Sample From Mars.sfz","bass"),
+        ("sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/03. Keys/01. 80s Piano - Dr Sample From Mars.sfz","keys")
         ]
 }
 
@@ -289,16 +318,15 @@ class SfizzScreen(Screen):
         def release_handler(key):
             pass
         
-        
         for pack_id, value in sfz_packs.items():
-            print("key value iteration")
-            print(pack_id)
-            print(value)
-            keys[pack_id].set_led(*preset)
-            pack_engine = value
-            print(pack_engine)
-            engine_nav_helper(pack_id,value)
+            if value[1] == "synth":
+                keys[pack_id].set_led(*pack_synth)
+            elif value[1] == "sample":
+                keys[pack_id].set_led(*pack_sample)
+            else:
+                keys[pack_id].set_led(*preset)
 
+            engine_nav_helper(pack_id,value[0])
         for i in unused_packs:
             keys[i].set_led(*non_functional)
             @keybow.on_release(keys[i])
@@ -356,11 +384,21 @@ class SfizzTypeScreen(Screen):
         for i in mode_keys:
             
             if i-4 < len(sfz_presets[self.name]):
-                print(i-4)
-                preset_name = sfz_presets[self.name][i-4]
-                print(preset_name)
-                keys[i].set_led(*preset)
-                sfizz_load_helper(i,preset_name)
+                preset = sfz_presets[self.name][i-4]
+                print(preset)
+                if preset[1] == "bass":
+                    keys[i].set_led(*preset_bass)
+                elif preset[1] == "keys":
+                    keys[i].set_led(*preset_keys)
+                elif preset[1] == "orch":
+                    keys[i].set_led(*preset_orch)
+                elif preset[1] == "synth":
+                    keys[i].set_led(*preset_synth)
+                elif preset[1] == "fx":
+                    keys[i].set_led(*preset_fx)
+                else:
+                    keys[i].set_led(*preset)
+                sfizz_load_helper(i,preset[0])
             else: 
                 keys[i].set_led(*non_functional)
                 @keybow.on_release(keys[i])
@@ -662,6 +700,6 @@ while True:
         if key.pressed:
             #get current value and flash then return to current value
             current_rgb = key.rgb
-            key.set_led(99,20,20)
-            time.sleep(.5)
+            key.set_led(50,50,50)
+            time.sleep(.2)
             key.set_led(current_rgb[0],current_rgb[1],current_rgb[2])
