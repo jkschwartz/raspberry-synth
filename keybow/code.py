@@ -20,18 +20,18 @@ layout = KeyboardLayoutUS(keyboard)
 
 # Colors
 engine = (0, 160, 170)
-selected_engine = (255,0,255)
-non_selected_engine = (0,20,20)
+selected_engine = (205,0,255)
+non_selected_engine = (0,10,10)
 preset = (80, 50, 0)
-pack_synth = (150,0,10)
-pack_sample = (150,110,0)
+pack_synth = (178,34,34)
+pack_sample = (251,79,20)
 preset_bass = (100,0,10)
-preset_keys = (110,10,0)
-preset_orch = (0, 100, 0)
-preset_synth = (90,90,0)
+preset_keys = (80,64,77)
+preset_orch = (89,39,32)
+preset_synth = (198,34,34)
 preset_fx = (20,0,100)
 
-selected_preset = (180,50,0)
+selected_preset = (10,150,30)
 action_up = (50, 200, 0)
 action_down = (200, 30, 0)
 settings = (0, 0, 255)
@@ -56,16 +56,19 @@ action_up_keys = [4,5,11]
 action_down_keys = [8,9]
 
 
-sfz_packs = {4: ("kawaii","synth"), 5: ("s360","sample"), 6: ("mirage","sample"), 7: ("soviet","synth"), 8: ("tape","sample"), 9: ("ob","synth"), 10: ("drSample","sample")}
+sfz_packs = {4: ("kawaii","synth"), 5: ("s360","sample"), 6: ("mirage","sample"), 7: ("soviet","synth"), 8: ("tape","sample"), 9: ("ob","synth"), 10: ("drSample","sample"), 11: ("vinyl","sample")}
 #keys to be set to non functional for sfizz screen
-unused_packs = [11,12,13]
+unused_packs = [12,13]
 
 #SFZ presets
 sfz_presets = {
     "kawaii": [
         ("sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/02. Keys/Randroid - Kawaii Dreams From Mars.sfz","keys"),
         ("sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/04. Organs/Indie Organ - Kawaii Dreams From Mars.sfz","keys"),
-        ("sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/03. Pads/Analog Strings - Kawaii Dreams From Mars.sfz","orch")
+        ("sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/03. Pads/Analog Strings - Kawaii Dreams From Mars.sfz","orch"),
+        ("sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/01. Voices/Bell Air - Kawaii Dreams From Mars.sfz","orch"),
+        ("sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/03. Pads/Glass Howl - Kawaii Dreams From Mars.sfz","synth"),
+        ("sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/02. Keys/Jazz Harp - Kawaii Dreams From Mars.sfz","keys")
 
         ],
     "s360": [
@@ -118,7 +121,13 @@ sfz_presets = {
         ("sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/02. Bass/06. Warm Bass - Dr Sample From Mars.sfz","bass"),
         ("sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/02. Bass/02. E Bass - Dr Sample From Mars.sfz","bass"),
         ("sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/03. Keys/01. 80s Piano - Dr Sample From Mars.sfz","keys")
-        ]
+        ],
+    "vinyl": [
+        ("sfz/vinyl_synths_from_mars/Vinyl Synths From Mars/Presets/SFZ/Vinyl Synths From Mars/01. Bass/MS20 Fuzz Mod - Vinyl Synths From Mars.sfz","bass"),
+        ("sfz/vinyl_synths_from_mars/Vinyl Synths From Mars/Presets/SFZ/Vinyl Synths From Mars/02. Keys & Pads/Sub37 Sine Chorus - Vinyl Synths From Mars.sfz","synth"),
+        ("sfz/vinyl_synths_from_mars/Vinyl Synths From Mars/Presets/SFZ/Vinyl Synths From Mars/03. Leads/Jupiter4 Saw Delay - Vinyl Synths From Mars.sfz","synth"),
+        ("sfz/vinyl_synths_from_mars/Vinyl Synths From Mars/Presets/SFZ/Vinyl Synths From Mars/03. Leads/Polaris Snake Organ - Vinyl Synths From Mars.sfz","keys")
+            ]
 }
 
 #[0 1 2 3]
@@ -355,13 +364,9 @@ def engine_nav_helper(key_id,new_screen):
     def release_handler(key):
         machine.go_to_screen(new_screen)
 
-def sfizz_load_helper(key_id,preset_path):
-    @keybow.on_release(keys[key_id])
-    def release_handler(key):
-        load_sfz_from_sfizz(preset_path)
-
 class SfizzTypeScreen(Screen):
-    selected_preset = -1
+    def __init__(self):
+        self.selected_sfz = -1
 
     @property 
     def name(self):
@@ -385,7 +390,6 @@ class SfizzTypeScreen(Screen):
             
             if i-4 < len(sfz_presets[self.name]):
                 preset = sfz_presets[self.name][i-4]
-                print(preset)
                 if preset[1] == "bass":
                     keys[i].set_led(*preset_bass)
                 elif preset[1] == "keys":
@@ -398,13 +402,12 @@ class SfizzTypeScreen(Screen):
                     keys[i].set_led(*preset_fx)
                 else:
                     keys[i].set_led(*preset)
-                sfizz_load_helper(i,preset[0])
+                self.sfizz_load_helper(i,preset[0])
             else: 
                 keys[i].set_led(*non_functional)
                 @keybow.on_release(keys[i])
                 def release_handler(key):
                     pass
- 
         keys[settings_key].set_led(*settings)
         @keybow.on_release(keys[settings_key])
         def release_handler(key):
@@ -420,7 +423,20 @@ class SfizzTypeScreen(Screen):
         pass
 
     def update(self, machine):
-       keys[selected_preset].set_led(*selected_preset)
+        if selected_sfz > 0 and selected_sfz < 16:
+            print(self.name)
+            print("something selected")
+            print(selected_sfz)
+            #not totally functionaly, TODO fix me
+            #keys[selected_sfz].set_led(*selected_preset)
+ 
+
+    def sfizz_load_helper(self,key_id,preset_path):
+        @keybow.on_release(keys[key_id])
+        def release_handler(key):
+            selected_sfz = key_id
+            load_sfz_from_sfizz(preset_path)
+
 
 class KawaiiScreen(SfizzTypeScreen):
     @property
@@ -513,6 +529,20 @@ class DrSampleScreen(SfizzTypeScreen):
     @property
     def name(self):
         return 'drSample'
+
+    def enter(self, machine):
+        SfizzTypeScreen.enter(self, machine)
+    
+    def exit(self, machine):
+        pass
+
+    def update(self,machine):
+        pass
+
+class VinylScreen(SfizzTypeScreen):
+    @property
+    def name(self):
+        return 'vinyl'
 
     def enter(self, machine):
         SfizzTypeScreen.enter(self, machine)
@@ -689,6 +719,7 @@ machine.add_screen(SovietScreen())
 machine.add_screen(TapeScreen())
 machine.add_screen(ObScreen())
 machine.add_screen(DrSampleScreen())
+machine.add_screen(VinylScreen())
 
 #default view
 machine.go_to_screen('home')
