@@ -37,7 +37,7 @@ action_down = (200, 30, 0)
 settings = (0, 0, 255)
 fx_settings = (0,255,0)
 
-non_functional = (5,5,5)
+non_functional = (0,2,1)
 
 # Keys
 engine_keys = [0,1,2,3]
@@ -68,8 +68,9 @@ sfz_presets = {
         ("sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/03. Pads/Analog Strings - Kawaii Dreams From Mars.sfz","orch"),
         ("sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/01. Voices/Bell Air - Kawaii Dreams From Mars.sfz","orch"),
         ("sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/03. Pads/Glass Howl - Kawaii Dreams From Mars.sfz","synth"),
-        ("sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/02. Keys/Jazz Harp - Kawaii Dreams From Mars.sfz","keys")
-
+        ("sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/02. Keys/Jazz Harp - Kawaii Dreams From Mars.sfz","keys"),
+        ("sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/04. Organs/Leslie - Kawaii Dreams From Mars.sfz","keys"),
+        ("sfz/kawaii_dreams_from_mars/Kawaii Dreams From Mars/SFZ/Kawaii Dreams From Mars/01. Voices/Hello - Kawaii Dreams From Mars.sfz","synth")
         ],
     "s360": [
         ("sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/05. Bass/E Bass Multi Filter - 360 From Mars.sfz","bass"),
@@ -78,7 +79,9 @@ sfz_presets = {
         ("sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/04. Brass & Woodwind/French Horn Filter - 360 From Mars.sfz","orch"),
         ("sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/06. Perc/Vibes - 360 From Mars.sfz","orch"),
         ("sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/04. Brass & Woodwind/English Horn - 360 From Mars.sfz","orch"),
-        ("sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/03. Keys/E Piano Tremolo - 360 From Mars.sfz","keys")
+        ("sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/03. Keys/E Piano Tremolo - 360 From Mars.sfz","keys"),
+        ("sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/02. Strings/Cello - 360 From Mars.sfz","orch"),
+        ("sfz/360_from_mars/360 From Mars/SFZ/360 From Mars/03. Keys/Clav - 360 From Mars.sfz","keys")
         ],
     "mirage": [
         ("sfz/mirage_from_mars/Mirage From Mars/Presets/SFZ/Mirage From Mars/01. Keys/Artifact Piano - Mirage From Mars.sfz","keys"),
@@ -88,7 +91,8 @@ sfz_presets = {
         ("sfz/mirage_from_mars/Mirage From Mars/Presets/SFZ/Mirage From Mars/01. Keys/Wurli - Mirage From Mars.sfz","keys"),
         ("sfz/mirage_from_mars/Mirage From Mars/Presets/SFZ/Mirage From Mars/03. Bass/Fuzz Bass - Mirage From Mars.sfz","bass"),
         ("sfz/mirage_from_mars/Mirage From Mars/Presets/SFZ/Mirage From Mars/03. Bass/Upright Bass - Mirage From Mars.sfz","bass"),
-        ("sfz/mirage_from_mars/Mirage From Mars/Presets/SFZ/Mirage From Mars/01. Keys/Dark Piano - Mirage From Mars.sfz","keys")
+        ("sfz/mirage_from_mars/Mirage From Mars/Presets/SFZ/Mirage From Mars/01. Keys/Dark Piano - Mirage From Mars.sfz","keys"),
+        ("sfz/mirage_from_mars/Mirage From Mars/Presets/SFZ/Mirage From Mars/02. Orchestral/Trombone Pad - Mirage From Mars.sfz","orch")
 
         ],
     "soviet": [
@@ -120,7 +124,9 @@ sfz_presets = {
         ("sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/04. Pads/02. Prophet Chorus - Dr Sample From Mars.sfz","synth"),
         ("sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/02. Bass/06. Warm Bass - Dr Sample From Mars.sfz","bass"),
         ("sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/02. Bass/02. E Bass - Dr Sample From Mars.sfz","bass"),
-        ("sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/03. Keys/01. 80s Piano - Dr Sample From Mars.sfz","keys")
+        ("sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/03. Keys/01. 80s Piano - Dr Sample From Mars.sfz","keys"),
+        ("sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/02. Bass/07. Goon Bass - Dr Sample From Mars.sfz","bass"),
+        ("sfz/dr_sample_from_mars/SFZ/Dr Sample From Mars/04. Pads/03. Brass - Dr Sample From Mars.sfz","orch")
         ],
     "vinyl": [
         ("sfz/vinyl_synths_from_mars/Vinyl Synths From Mars/Presets/SFZ/Vinyl Synths From Mars/01. Bass/MS20 Fuzz Mod - Vinyl Synths From Mars.sfz","bass"),
